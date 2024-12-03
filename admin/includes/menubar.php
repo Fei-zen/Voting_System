@@ -17,7 +17,7 @@
       <li class=""><a href="home.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
       <li class=""><a href="election_status.php"><span class="glyphicon glyphicon-lock"></span> <span>Election Status</span></a></li>
       <li class="header">MANAGE</li>
-      <li class=""><a href="sessions.php"><i class="fa fa-black-tie"></i> <span>Elections</span></a></li>
+      <li class=""><a href="sessions.php"><i class="glyphicon glyphicon-lock"></i> <span>Elections</span></a></li>
       <li class=""><a href="positions.php"><i class="fa fa-tasks"></i> <span>Positions</span></a></li>
       <li class=""><a href="candidates.php"><i class="fa fa-black-tie"></i> <span>Candidates</span></a></li>
       <li class=""><a href="voters.php"><i class="fa fa-users"></i> <span>Voters</span></a></li>

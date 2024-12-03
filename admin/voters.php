@@ -14,7 +14,7 @@
         Voters List
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="home.php"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Voters</li>
       </ol>
     </section>
@@ -47,10 +47,8 @@
           <div class="box">
             <div class="box-header with-border grid buttons">
               <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
-              <a href="#uploadnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> Upload</a>
+              <a href="#uploadnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-upload"></i> Upload</a>
             </div>
-            <!-- <div class="box-header with-border">
-            </div> -->
             <div class="box-body">
               <table id="example1" class="table table-bordered">
                 <thead>
