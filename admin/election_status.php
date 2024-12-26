@@ -44,13 +44,15 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
-            <div class="box-body">
+            <div class="table-responsive box-body">
               <table id="example1" class="table table-bordered">
                 <thead>
-                  <th>Title</th>
-                  <th>Course</th>
-                  <th>Status</th>
-                  <th>Progress</th>
+                  <tr class="bg-dark">
+                    <th>Title</th>
+                    <th>Course</th>
+                    <th>Status</th>
+                    <th>Progress</th>
+                  </tr>
                 </thead>
                 <tbody>
                   <?php

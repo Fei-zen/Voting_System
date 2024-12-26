@@ -46,19 +46,21 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header with-border grid buttons">
-              <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
+            <a href="#Addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
+            <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
               <a href="#uploadnewcandidates" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-upload"></i> Upload</a>
             </div>
             <div class="box-body">
               <table id="example1" class="table table-bordered">
                 <thead>
-                  <th class="hidden"></th>
+                  <tr class="bg-dark">
                   <th>Position</th>
                   <th>Photo</th>
                   <th>Firstname</th>
                   <th>Lastname</th>
                   <th>Platform</th>
                   <th>Tools</th>
+                  </tr>
                 </thead>
                 <tbody>
                   <?php
@@ -97,6 +99,7 @@
   <?php include 'includes/footer.php'; ?>
   <?php include 'includes/candidates_modal.php'; ?>
   <?php include 'includes/candidates_upload.php'; ?>
+  <?php include 'includes/add_candidates_modal.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script>

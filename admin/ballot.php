@@ -41,7 +41,7 @@ $positionStmt->close();
         Sample Ballot
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="home.php"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="sam_ballot.php">Ballot List</a></li>
         <li class="active">Sample Ballot</li>
       </ol>

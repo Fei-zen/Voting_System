@@ -1,8 +1,9 @@
+<?php include 'includes/header.php'; ?>
 <header class="main-header">
   <!-- Logo -->
   <a href="home.php" class="logo main-header-1">
     <!-- mini logo for sidebar mini 50x50 pixels -->
-    <span class="logo-mini"><b>C</b>P</span>
+    <span class="logo-mini"><b>V</b>S</span>
     <!-- logo for regular state and mobile devices -->
     <span class="logo-lg"><b>Voting System </span>
   </a>
@@ -13,7 +14,7 @@
       <span class="sr-only">Toggle navigation</span>
     </a>
 
-    <div class="navbar-custom-menu">
+    <div class=" navbar-custom-menu">
       <ul class="nav navbar-nav">
         <!-- User Account: style can be found in dropdown.less -->
         <li class="dropdown user user-menu">

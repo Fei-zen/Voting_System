@@ -4,7 +4,7 @@ include 'includes/conn.php'; // Database connection
 
 // Check if voter is logged in
 if (!isset($_SESSION['voter_id'])) {
-    $_SESSION['error'] = 'You must log in first.';
+    $_SESSION['error'] = 'You must log in first to vote.';
     header('Location: home.php');
     exit();
 }
@@ -66,6 +66,20 @@ if (empty($election_course)) {
 
 if ($election_course !== 'CICT' && $election_course !== $voter_course) {
     $_SESSION['error'] = 'You are not eligible to vote in this election.';
+    header('Location: home.php');
+    exit();
+}
+
+// Check if voter already voted for this session
+$checkSql = "SELECT * FROM votes WHERE voters_id = ? AND session_id = ?";
+$checkStmt = $conn->prepare($checkSql);
+$checkStmt->bind_param("ii", $voter_id, $session_id);
+$checkStmt->execute();
+$checkResult = $checkStmt->get_result();
+$checkStmt->close();
+
+if ($checkResult->num_rows > 0) {
+    $_SESSION['error'] = 'You have already voted in this election.';
     header('Location: home.php');
     exit();
 }

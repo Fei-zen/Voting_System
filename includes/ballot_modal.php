@@ -3,19 +3,43 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">Vote Preview</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Vote Preview</h4>
             </div>
             <div class="modal-body">
-              <div id="preview_body"></div>
+                <div id="preview_body"></div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+                <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal">
+                    <i class="fa fa-close"></i> Close
+                </button>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Error Modal -->
+<div class="modal fade" id="error_modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title text-danger">Error</h4>
+            </div>
+            <div class="modal-body">
+                <ul id="error_list"></ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-flat" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- Platform -->
 <div class="modal fade" id="platform">
@@ -36,8 +60,29 @@
     </div>
 </div>
 
+
 <!-- View Ballot -->
-<div class="modal fade" id="view">
+<div class="modal fade" id="view" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Your Ballot</h4>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+                </button>  -->
+            </div>
+            <div class="modal-body" id="modal-content">
+                <!-- Content will be dynamically updated by the script -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="view12">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -63,6 +108,4 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
             </div>
-        </div>
-    </div>
-</div>
+   

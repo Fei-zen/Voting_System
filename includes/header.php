@@ -10,6 +10,8 @@
   	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!-- iCheck for checkboxes and radio inputs -->
     <link rel="stylesheet" href="plugins/iCheck/all.css">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"> -->
+
   	<!-- DataTables -->
     <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   	<!-- Font Awesome -->
@@ -58,6 +60,17 @@
       /* .login-logo{
         background-color: #ccc;
       } */
+      .btn-md{
+        text-align: center;
+        width: 100px;
+      }
+      .bg-dark{
+        background-color: skyblue;
+      }
+      .space{
+        grid: gap 10px;;
+        text-align: center;
+      }
 
       .clist{
         margin-left: 20px;

@@ -15,7 +15,7 @@
     <ul class="sidebar-menu main-header-1" data-widget="tree">
       <li class="header">REPORTS</li>
       <li class=""><a href="home.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-      <li class=""><a href="election_status.php"><span class="glyphicon glyphicon-lock"></span> <span>Election Status</span></a></li>
+      <li class=""><a href="election_status.php"><i class="glyphicon glyphicon-lock"></i> <span>Election Status</span></a></li>
       <li class="header">MANAGE</li>
       <li class=""><a href="sessions.php"><i class="glyphicon glyphicon-lock"></i> <span>Elections</span></a></li>
       <li class=""><a href="positions.php"><i class="fa fa-tasks"></i> <span>Positions</span></a></li>

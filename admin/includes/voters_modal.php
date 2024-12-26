@@ -10,25 +10,28 @@
             <div class="modal-body">
               <form class="form-horizontal" method="POST" action="voters_add.php" enctype="multipart/form-data">
                 <div class="form-group">
+                    <label for="voter_id" class="col-sm-3 control-label">Voter ID</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="voter_id" name="voter_id" placeholder="Enter Voter ID" required>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="firstname" class="col-sm-3 control-label">Firstname</label>
-
                     <div class="col-sm-9">
                       <input type="text" class="form-control" id="firstname" name="firstname" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="lastname" class="col-sm-3 control-label">Lastname</label>
-
                     <div class="col-sm-9">
                       <input type="text" class="form-control" id="lastname" name="lastname" required>
                     </div>
                 </div>
                 <div class="form-group">
                   <label for="edit_course" class="col-sm-3 control-label">Course</label>
-
-                    <div class="col-sm-9">
+                  <div class="col-sm-9">
                       <select name="course" id="edit_course" class="form-control" required>
-                        <option value=" " selected disabled>Select Course</option>
+                        <option value="" selected disabled>Select Course</option>
                         <option value="BSCS">BSCS</option>
                         <option value="BSIS">BSIS</option>
                         <option value="BSIT">BSIT</option>
@@ -38,15 +41,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                    <label for="password" class="col-sm-3 control-label">Password</label>
-
-                    <div class="col-sm-9">
-                      <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-                </div>
-                <div class="form-group">
                     <label for="photo" class="col-sm-3 control-label">Photo</label>
-
                     <div class="col-sm-9">
                       <input type="file" id="photo" name="photo">
                     </div>
@@ -60,6 +55,8 @@
         </div>
     </div>
 </div>
+
+
 
 <!-- Edit -->
 <div class="modal fade" id="edit">

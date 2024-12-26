@@ -55,10 +55,24 @@
       .Background-color{
         background-color: #810504;
       }
+      .bg-dark{
+        background-color: skyblue;
+      }
+      .nav-fix{
+        position: sticky;
+        top: 0;
+      }
 
       #candidate_list ul{
         list-style-type:none;
       }
+      .btn-sm{
+        text-align: center;
+        width: 80px;
+      }
+      /* .nav-bar{
+        position: fixed top;
+      } */
 
       #candidate_list ul li{ 
         margin:0 30px 30px 0; 

@@ -51,12 +51,15 @@
             <div class="box-body">
               <table id="example1" class="table table-bordered">
                 <thead>
+                <tr class="bg-dark">
                   <th>Title</th>
                   <th>Course</th>
                   <th>Start Date</th>
                   <th>End Date</th>
                   <th>Created At</th>
                   <th>Tools</th>
+
+                </tr>
                 </thead>
                 <tbody>
                   <?php

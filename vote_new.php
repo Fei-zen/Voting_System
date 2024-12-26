@@ -24,11 +24,46 @@ if (!$session) {
 }
 
 // Fetch positions and candidates
-$positionsQuery = $conn->prepare("SELECT * FROM positions WHERE session_id = ? ORDER BY priority ASC");
-$positionsQuery->bind_param("i", $session_id);
-$positionsQuery->execute();
-$positions = $positionsQuery->get_result();
-$positionsQuery->close();
+// Fetch positions and candidates for the given session
+$query = "
+    SELECT p.id AS position_id, p.description, p.max_vote, p.priority,
+           c.id AS candidate_id, c.firstname, c.lastname, c.photo, c.platform
+    FROM positions p
+    INNER JOIN candidates c ON p.id = c.position_id
+    WHERE c.session_id = ?
+    ORDER BY p.priority ASC, c.lastname ASC
+";
+
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $session_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Organize the data into an array grouped by positions
+$positions = [];
+while ($row = $result->fetch_assoc()) {
+    $position_id = $row['position_id'];
+
+    if (!isset($positions[$position_id])) {
+        // Initialize position data
+        $positions[$position_id] = [
+            'description' => $row['description'],
+            'max_vote' => $row['max_vote'],
+            'candidates' => []
+        ];
+    }
+
+    // Add candidate to the position
+    $positions[$position_id]['candidates'][] = [
+        'id' => $row['candidate_id'],
+        'firstname' => $row['firstname'],
+        'lastname' => $row['lastname'],
+        'photo' => $row['photo'],
+        'platform' => $row['platform']
+    ];
+}
+$stmt->close();
+
 ?>
 
 <?php include 'includes/header.php'; ?>
@@ -47,75 +82,60 @@ $positionsQuery->close();
                         <input type="hidden" name="session_id" value="<?php echo $session_id; ?>">
                         
 
-                        <?php while ($position = $positions->fetch_assoc()): ?>
-                            <div class='panel panel-default'>
-                                <div class='panel-heading'>
-                                    <b>Position: <?php echo htmlspecialchars($position['description']); ?></b> (Max Votes: <?php echo $position['max_vote']; ?>)
-                                </div>
-                                <div class='panel-body'>
-                                    <?php
-                                    $candidatesQuery = $conn->prepare("SELECT * FROM candidates WHERE position_id = ?");
-                                    $candidatesQuery->bind_param("i", $position['id']);
-                                    $candidatesQuery->execute();
-                                    $candidates = $candidatesQuery->get_result();
-                                    $candidatesQuery->close();
-                                    ?>
-                                    <div class="row">
-                                        <?php while ($candidate = $candidates->fetch_assoc()): ?>
-                                            <div class="col-md-4 text-center">
-                                                <!-- Display candidate photo or fallback -->
-                                                <?php if (!empty($candidate['photo'])): ?>
-                                                    <img src="images/<?php echo htmlspecialchars($candidate['photo']); ?>" alt="Candidate Photo" class="img-thumbnail" width="100" height="100">
-                                                <?php else: ?>
-                                                    <img src="images/profile.jpg" alt="Placeholder" class="img-thumbnail" width="100" height="100">
-                                                <?php endif; ?>
-                                                
-                                                <div>
-                                                    <b><?php echo htmlspecialchars($candidate['firstname'] . ' ' . $candidate['lastname']); ?></b>
-                                                    <br>
-                                                    <small><?php echo nl2br(htmlspecialchars($candidate['platform'])); ?></small>
-                                                </div>
-                                                
-                                                <?php if ($position['max_vote'] > 1): ?>
-                                                    <!-- Checkbox for multi-vote positions -->
-                                                    <input 
-                                                        type="checkbox" 
-                                                        name="position_<?php echo $position['id']; ?>[]" 
-                                                        value="<?php echo $candidate['id']; ?>" 
-                                                        class="position_<?php echo $position['id']; ?>_vote form-check-input">
-                                                <?php else: ?>
-                                                    <!-- Radio button for single-vote positions -->
-                                                    <input 
-                                                        type="radio" 
-                                                        name="position_<?php echo $position['id']; ?>" 
-                                                        value="<?php echo $candidate['id']; ?>" 
-                                                        class="position_<?php echo $position['id']; ?>_vote form-check-input">
-                                                <?php endif; ?>
+                        <?php if (!empty($positions)): ?>
+                            <?php foreach ($positions as $position_id => $position): ?>
+                                <div class='panel panel-default'>
+                                    <div class='panel-heading'>
+                                        <b>Position: <?php echo htmlspecialchars($position['description']); ?></b>
+                                        (Max Votes: <?php echo $position['max_vote']; ?>)
+                                    </div>
+                                    <div class='panel-body'>
+                                        <?php if (!empty($position['candidates'])): ?>
+                                            <div class="row">
+                                                <?php foreach ($position['candidates'] as $candidate): ?>
+                                                    <div class="col-md-4 text-center">
+                                                        <!-- Display candidate photo -->
+                                                        <?php if (!empty($candidate['photo'])): ?>
+                                                            <img src="images/<?php echo htmlspecialchars($candidate['photo']); ?>" alt="Candidate Photo" class="img-thumbnail" width="100" height="100">
+                                                        <?php else: ?>
+                                                            <img src="images/profile.jpg" alt="Placeholder" class="img-thumbnail" width="100" height="100">
+                                                        <?php endif; ?>
+
+                                                        <!-- Candidate Info -->
+                                                        <div>
+                                                            <b><?php echo htmlspecialchars($candidate['firstname'] . ' ' . $candidate['lastname']); ?></b>
+                                                            <br>
+                                                            <small><?php echo nl2br(htmlspecialchars($candidate['platform'])); ?></small>
+                                                        </div>
+
+                                                        <!-- Input for Voting -->
+                                                        <?php if ($position['max_vote'] > 1): ?>
+                                                            <input 
+                                                                type="checkbox" 
+                                                                name="position_<?php echo $position_id; ?>[]" 
+                                                                value="<?php echo $candidate['id']; ?>" 
+                                                                class="form-check-input">
+                                                        <?php else: ?>
+                                                            <input 
+                                                                type="radio" 
+                                                                name="position_<?php echo $position_id; ?>" 
+                                                                value="<?php echo $candidate['id']; ?>" 
+                                                                class="form-check-input">
+                                                        <?php endif; ?>
+                                                    </div>
+                                                <?php endforeach; ?>
                                             </div>
-                                        <?php endwhile; ?>
+                                        <?php else: ?>
+                                            <p>No candidates available for this position.</p>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
-                            </div>
-                            <?php if ($position['max_vote'] > 1): ?>
-                                <!-- Enforce max_vote restriction with JavaScript -->
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        const maxVotes = <?php echo $position['max_vote']; ?>;
-                                        const checkboxes = document.querySelectorAll('.position_<?php echo $position['id']; ?>_vote');
-                                        
-                                        checkboxes.forEach(checkbox => {
-                                            checkbox.addEventListener('change', function() {
-                                                const checkedBoxes = document.querySelectorAll('.position_<?php echo $position['id']; ?>_vote:checked');
-                                                if (checkedBoxes.length > maxVotes) {
-                                                    this.checked = false; // Uncheck the current box
-                                                    alert('You can only select up to ' + maxVotes + ' candidates for this position.');
-                                                }
-                                            });
-                                        });
-                                    });
-                                </script>
-                            <?php endif; ?>
-                        <?php endwhile; ?>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p>No positions available for this session.</p>
+                        <?php endif; ?>
+
+
                         <div  class="space">
                             <div>
                                 <button class='btn btn-primary btn-md vote-btn' type="submit">Submit</button>

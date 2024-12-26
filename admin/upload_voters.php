@@ -1,4 +1,6 @@
 <?php
+set_time_limit(300); // Set the max execution time to 300 seconds (5 minutes)
+
 // Start the session to store messages
 session_start();
 
@@ -31,8 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload'])) {
                     continue;
                 }
 
-                // Ensure the CSV has the correct number of columns
-                if (count($data) !== 4) {
+                // Ensure the CSV has the correct number of columns (now including year and photo)
+                if (count($data) !== 6) {
                     continue; // Skip invalid rows
                 }
 
@@ -41,6 +43,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload'])) {
                 $lastname = trim($data[1]);
                 $idNumber = trim($data[2]);
                 $course = trim($data[3]);
+                $year = trim($data[4]); // New year field
+                $photo = trim($data[5]); // New photo field
 
                 // Default to "CICT" if the course is empty or invalid
                 if (!isset($course) || $course === '' || !in_array($course, $validCourses)) {
@@ -65,10 +69,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload'])) {
                     continue;
                 }
 
+                // If photo field is not empty, you can save the photo (e.g., move it to an upload directory)
+                $photoPath = null;
+                if (!empty($photo)) {
+                    // Assuming photo is a valid file name (you can further validate photo here)
+                    // For now, just move the file with a unique name or use the file path from the CSV
+                    $photoPath = 'images/' . $photo; // Assuming the photos are uploaded into the 'photos' directory
+                    // Move photo to the 'photos' directory
+                    // (this part assumes the photo file exists and is valid, handle accordingly)
+                    if (file_exists($photoPath)) {
+                        // Check if the file exists and handle overwriting, etc. (e.g., rename the file if needed)
+                    }
+                }
+
                 // Insert voter data into the database
-                $insertSql = "INSERT INTO voters (voters_id, firstname, lastname, password, course) VALUES (?, ?, ?, ?, ?)";
+                $insertSql = "INSERT INTO voters (voters_id, password, firstname, lastname, year, photo, course) 
+                              VALUES (?, ?, ?, ?, ?, ?, ?)";
                 $insertStmt = $conn->prepare($insertSql);
-                $insertStmt->bind_param("sssss", $votersId, $firstname, $lastname, $hashedPassword, $course);
+                $insertStmt->bind_param("sssssss", $votersId, $hashedPassword, $firstname, $lastname, $year, $photoPath, $course);
 
                 if ($insertStmt->execute()) {
                     $successCount++;
